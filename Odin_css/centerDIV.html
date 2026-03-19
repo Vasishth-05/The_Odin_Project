@@ -1,28 +1,514 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Spiritual Platform Ecosystem Research</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #FAF8F5; /* Warm neutral background */
+            color: #2D3748;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+        }
+        
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Mandatory Chart Container Styling */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        .tab-btn.active {
+            border-bottom: 3px solid #D97706; /* Amber-600 */
+            color: #D97706;
+            font-weight: 600;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
 </head>
-<style>
-.one{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-.two{
-    border-color: black;
-    border: ridge;
-    background-color: red;
-    height: 100px;
-    width: 100px;
-}
-</style>
-<body>
-    <div class="one">
-        <div class="two">Hare krsna</div>
-    </div>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Chosen Palette: Warm Neutrals with Saffron/Ochre Accents (Calm, Spiritual, Professional) -->
+    <!-- Application Structure Plan: A tabbed dashboard interface. This allows users to logically step through the research: Executive Summary -> Competitive Analysis -> Key Features (Interactive Drill-down) -> Implementation Strategy. This non-linear exploration is chosen so developers and stakeholders can quickly jump to the data most relevant to their current task (e.g., viewing feature lists vs. seeing engagement charts). -->
+    <!-- Visualization & Content Choices: 
+         1. Radar Chart (Chart.js): Goal is to compare the focus areas of different reference websites (Gaur Gopal Das, Radhanath Swami, etc.). Radar chart effectively shows the "shape" of each platform's strategy.
+         2. Interactive Feature Grid (HTML/JS): Goal is to present actionable features. A clickable grid allows categorization without overwhelming the user with text.
+         3. Bar Chart (Chart.js): Goal is to show the projected impact of features on user retention. Bar charts are best for comparing independent categories.
+         NO SVG/Mermaid used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <span class="text-3xl mr-3 text-amber-600">🕉️</span>
+                    <h1 class="text-xl font-bold text-gray-900">Platform Ecosystem Research</h1>
+                </div>
+                <div class="text-sm text-gray-500 hidden sm:block">
+                    Web &bull; App &bull; Chatbot Integration
+                </div>
+            </div>
+            <!-- Navigation -->
+            <nav class="flex space-x-8 overflow-x-auto pb-1">
+                <button class="tab-btn active pb-2 whitespace-nowrap text-gray-500 hover:text-gray-700 transition-colors" data-target="summary">1. Executive Summary</button>
+                <button class="tab-btn pb-2 whitespace-nowrap text-gray-500 hover:text-gray-700 transition-colors" data-target="analysis">2. Platform Analysis</button>
+                <button class="tab-btn pb-2 whitespace-nowrap text-gray-500 hover:text-gray-700 transition-colors" data-target="features">3. Feature Recommendations</button>
+                <button class="tab-btn pb-2 whitespace-nowrap text-gray-500 hover:text-gray-700 transition-colors" data-target="strategy">4. Implementation Strategy</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- SECTION 1: Executive Summary -->
+        <section id="summary" class="tab-content block animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800 border-b pb-4">Executive Summary & Research Objectives</h2>
+                <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                    This document synthesizes research on prominent spiritual platform ecosystems, specifically analyzing the digital footprints of figures like <strong class="text-amber-700">Gaur Gopal Das</strong>, <strong class="text-amber-700">Radhanath Swami</strong>, <strong class="text-amber-700">Lokanath Swami</strong>, and broader <strong class="text-amber-700">MyAshraya/ISKCON</strong> community portals. The objective is to extract core functionalities and engagement strategies that can be integrated into a unified <strong>Website + Mobile App + Chatbot</strong> ecosystem.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="bg-orange-50 p-6 rounded-lg border border-orange-100">
+                        <div class="text-4xl mb-4">🌐</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">The Website</h3>
+                        <p class="text-gray-600 text-sm">Acts as the comprehensive archive. Best for deep-dive reading, long-form video, secure donations, and extensive event calendars.</p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-lg border border-blue-100">
+                        <div class="text-4xl mb-4">📱</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">The Mobile App</h3>
+                        <p class="text-gray-600 text-sm">Acts as the daily companion. Best for habit tracking (japa/reading), offline audio listening, daily quotes, and push notifications.</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-lg border border-green-100">
+                        <div class="text-4xl mb-4">🤖</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">The Chatbot</h3>
+                        <p class="text-gray-600 text-sm">Acts as the interactive guide. Best for answering spiritual FAQs, finding specific lectures, and guiding users to relevant app/web sections.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Platform Analysis -->
+        <section id="analysis" class="tab-content hidden animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm p-8 border border-gray-100 mb-8">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Competitive Platform Analysis</h2>
+                <p class="text-gray-600 mb-8">
+                    An analysis of reference websites reveals different strategic focuses. Some prioritize modern lifestyle content, while others focus on deep theological archiving and community events. Understanding these profiles helps shape our multifaceted approach.
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container bg-gray-50 p-4 rounded-xl border border-gray-100">
+                        <canvas id="competitorRadarChart"></canvas>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="p-4 border-l-4 border-amber-500 bg-amber-50 rounded-r-lg">
+                            <h4 class="font-bold text-gray-800 text-lg">Modern & Accessible (e.g., Gaur Gopal Das)</h4>
+                            <p class="text-sm text-gray-600 mt-1">High focus on UI/UX, short-form lifestyle videos, book promotions, and corporate-friendly interfaces. Excellent at top-of-funnel engagement.</p>
+                        </div>
+                        <div class="p-4 border-l-4 border-blue-500 bg-blue-50 rounded-r-lg">
+                            <h4 class="font-bold text-gray-800 text-lg">Archival & Community (e.g., Radhanath Swami)</h4>
+                            <p class="text-sm text-gray-600 mt-1">Deep archives of audio lectures, yatra (travel) details, community project showcases (like Govardhan Eco Village). Excellent for long-term followers.</p>
+                        </div>
+                        <div class="p-4 border-l-4 border-green-500 bg-green-50 rounded-r-lg">
+                            <h4 class="font-bold text-gray-800 text-lg">Devotional & Portal (e.g., MyAshraya/ISKCON)</h4>
+                            <p class="text-sm text-gray-600 mt-1">Heavy emphasis on daily Darshan (deity images), festival calendars, donation portals, and live streaming. Acts as a central hub for daily practice.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Feature Recommendations -->
+        <section id="features" class="tab-content hidden animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Recommended Feature Architecture</h2>
+                <p class="text-gray-600 mb-8">
+                    Based on the research, here are the key features that should be distributed across the Web, App, and Chatbot ecosystem. <strong>Click a category below to explore specific features.</strong>
+                </p>
+
+                <!-- Interactive Feature Explorer -->
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Categories (Sidebar) -->
+                    <div class="md:w-1/3 flex flex-col space-y-2">
+                        <button class="feature-category-btn active text-left px-4 py-3 rounded-lg bg-amber-600 text-white font-semibold transition-colors" data-category="content">
+                            📚 Content & Media
+                        </button>
+                        <button class="feature-category-btn text-left px-4 py-3 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 font-semibold transition-colors" data-category="daily">
+                            🌅 Daily Engagement
+                        </button>
+                        <button class="feature-category-btn text-left px-4 py-3 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 font-semibold transition-colors" data-category="community">
+                            🤝 Community & Events
+                        </button>
+                        <button class="feature-category-btn text-left px-4 py-3 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 font-semibold transition-colors" data-category="chatbot">
+                            🤖 AI Chatbot Specifics
+                        </button>
+                    </div>
+
+                    <!-- Feature Details (Main Area) -->
+                    <div class="md:w-2/3 bg-gray-50 p-6 rounded-xl border border-gray-200 min-h-[300px]" id="feature-details-container">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Implementation Strategy -->
+        <section id="strategy" class="tab-content hidden animate-fade-in">
+            <div class="bg-white rounded-xl shadow-sm p-8 border border-gray-100">
+                <h2 class="text-3xl font-bold mb-4 text-gray-800">Omni-Channel Strategy & Impact</h2>
+                <p class="text-gray-600 mb-8">
+                    A successful ecosystem doesn't duplicate content; it optimizes delivery based on the medium. The chart below illustrates the projected impact of various features on overall user retention and daily active use.
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                    <div class="lg:col-span-3 chart-container">
+                        <canvas id="impactBarChart"></canvas>
+                    </div>
+                    
+                    <div class="lg:col-span-2 space-y-4">
+                        <h3 class="text-xl font-bold text-gray-800 border-b pb-2">The Golden Rule of Integration</h3>
+                        <div class="bg-amber-50 p-4 rounded border border-amber-200">
+                            <p class="text-sm text-gray-800 font-semibold">"Store Once, Publish Everywhere"</p>
+                            <p class="text-xs text-gray-600 mt-2">Maintain a single headless CMS backend. When an audio lecture is uploaded, it should instantly appear in the website's archive, trigger a push notification to the App, and become searchable via the Chatbot.</p>
+                        </div>
+                        
+                        <h4 class="font-bold text-gray-700 mt-6">Recommended Tech Stack Flow:</h4>
+                        <ul class="space-y-2 mt-2">
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">✓</span>
+                                <span class="text-sm text-gray-600"><strong>Backend:</strong> Centralized database (user profiles, media links, events).</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">✓</span>
+                                <span class="text-sm text-gray-600"><strong>App (React Native/Flutter):</strong> Caches audio for offline, handles local push notifications, tracks Japa count.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">✓</span>
+                                <span class="text-sm text-gray-600"><strong>Web (React/Next.js):</strong> SEO optimized articles, heavy video streaming, secure payment gateways.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">✓</span>
+                                <span class="text-sm text-gray-600"><strong>Chatbot (Dialogflow/Custom LLM):</strong> Integrated via widget on web, and dedicated tab on the app. Uses RAG (Retrieval-Augmented Generation) on website articles.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400">
+            Interactive Analysis Document &bull; Designed for Ecosystem Planning
+        </div>
+    </footer>
+
+    <!-- Application Logic & Data -->
+    <script>
+        // --- 1. State Management & Data Storage ---
+        const appState = {
+            currentTab: 'summary',
+            currentFeatureCategory: 'content'
+        };
+
+        const featureData = {
+            content: {
+                title: "Content & Media Ecosystem",
+                description: "The core repository of spiritual knowledge. Must be highly organized and searchable.",
+                items: [
+                    { icon: "🎧", name: "Categorized Audio Library", desc: "Filter by topic (Bhagavad Gita, Srimad Bhagavatam), year, or location. App allows offline downloads; Web offers full streaming." },
+                    { icon: "📺", name: "Video Integration", desc: "Embedded YouTube playlists for seminars. Web handles long-form; App focuses on short 'Reels/Shorts' for quick inspiration." },
+                    { icon: "📖", name: "E-Books & Transcripts", desc: "Read-along features for audio lectures. Highly requested feature for deeper study." }
+                ]
+            },
+            daily: {
+                title: "Daily Engagement & Habits",
+                description: "Features designed primarily for the Mobile App to ensure users open it every day.",
+                items: [
+                    { icon: "📿", name: "Digital Chanting (Japa) Counter", desc: "App-exclusive. Tracks daily rounds, shows historical progress, offers virtual beads." },
+                    { icon: "🖼️", name: "Daily Darshan", desc: "High-quality daily deity pictures synced from the main temple. App can set these as widgets." },
+                    { icon: "💬", name: "Quote of the Day", desc: "Push notification every morning. Easily shareable to WhatsApp/Social Media directly from the app." }
+                ]
+            },
+            community: {
+                title: "Community & Events",
+                description: "Connecting users to the physical and virtual sanga (community).",
+                items: [
+                    { icon: "📅", name: "Global Event Calendar", desc: "Syncs yatras, festivals, and local temple events. Users can RSVP or add to their personal calendar." },
+                    { icon: "💝", name: "Seamless Donations", desc: "Web focuses on recurring/large donations. App handles quick, one-tap micro-donations (e.g., 'Feed a child today')." },
+                    { icon: "🙋", name: "Volunteer Portal", desc: "Sign up for seva (service) during major festivals. Best handled on the Website." }
+                ]
+            },
+            chatbot: {
+                title: "AI Chatbot Integration",
+                description: "The intelligent guide bridging the gap between user queries and massive content archives.",
+                items: [
+                    { icon: "🔍", name: "Semantic Search", desc: "User asks: 'What is the cure for anxiety?' Chatbot returns exact timestamps of videos/audios addressing this." },
+                    { icon: "🗓️", name: "Schedule Assistant", desc: "User asks: 'When is the next lecture in Mumbai?' Chatbot pulls from the Event Calendar database." },
+                    { icon: "🧭", name: "Onboarding Guide", desc: "Greets new app/web users and asks their current spiritual level to recommend a starting playlist or book." }
+                ]
+            }
+        };
+
+        // --- 2. Chart Instances ---
+        let radarChartInstance = null;
+        let barChartInstance = null;
+
+        // --- 3. UI Update Functions ---
+        
+        // Tab Navigation
+        function switchTab(targetId) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if(btn.dataset.target === targetId) {
+                    btn.classList.add('active', 'border-amber-600', 'text-amber-600', 'font-semibold');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('active', 'border-amber-600', 'text-amber-600', 'font-semibold');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+
+            // Update content sections
+            document.querySelectorAll('.tab-content').forEach(section => {
+                if(section.id === targetId) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+
+            appState.currentTab = targetId;
+
+            // Render charts if the specific tab is opened to ensure canvas is visible
+            if(targetId === 'analysis' && !radarChartInstance) initRadarChart();
+            if(targetId === 'strategy' && !barChartInstance) initBarChart();
+        }
+
+        // Feature Category Navigation
+        function renderFeatureDetails(categoryKey) {
+            const container = document.getElementById('feature-details-container');
+            const data = featureData[categoryKey];
+            
+            let html = `
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">${data.title}</h3>
+                <p class="text-gray-600 mb-6">${data.description}</p>
+                <div class="space-y-4">
+            `;
+
+            data.items.forEach(item => {
+                html += `
+                    <div class="feature-card bg-white p-4 rounded-lg border border-gray-100 flex items-start">
+                        <div class="text-3xl mr-4 mt-1">${item.icon}</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">${item.name}</h4>
+                            <p class="text-sm text-gray-600 mt-1">${item.desc}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function switchFeatureCategory(btnElement, categoryKey) {
+            // Update button styles
+            document.querySelectorAll('.feature-category-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-600', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            btnElement.classList.remove('bg-gray-100', 'text-gray-700');
+            btnElement.classList.add('bg-amber-600', 'text-white');
+
+            appState.currentFeatureCategory = categoryKey;
+            renderFeatureDetails(categoryKey);
+        }
+
+        // --- 4. Chart.js Initialization ---
+        
+        function initRadarChart() {
+            const ctx = document.getElementById('competitorRadarChart').getContext('2d');
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Audio Archives', 'Short Video/Social', 'Event Logistics', 'E-Commerce/Books', 'Daily Practices'],
+                    datasets: [{
+                        label: 'Modern/Lifestyle Focus',
+                        data: [40, 95, 60, 90, 50],
+                        fill: true,
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        borderColor: 'rgb(59, 130, 246)',
+                        pointBackgroundColor: 'rgb(59, 130, 246)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(59, 130, 246)'
+                    }, {
+                        label: 'Traditional/Archival Focus',
+                        data: [95, 40, 90, 60, 85],
+                        fill: true,
+                        backgroundColor: 'rgba(217, 119, 6, 0.2)',
+                        borderColor: 'rgb(217, 119, 6)',
+                        pointBackgroundColor: 'rgb(217, 119, 6)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(217, 119, 6)'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0,0,0,0.1)' },
+                            grid: { color: 'rgba(0,0,0,0.1)' },
+                            pointLabels: {
+                                font: { size: 12, family: "'Open Sans', sans-serif" },
+                                color: '#4a5568'
+                            },
+                            ticks: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                            titleColor: '#2d3748',
+                            bodyColor: '#4a5568',
+                            borderColor: '#e2e8f0',
+                            borderWidth: 1
+                        }
+                    }
+                }
+            });
+        }
+
+        function initBarChart() {
+            const ctx = document.getElementById('impactBarChart').getContext('2d');
+            barChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Daily Quotes (App)', 'Audio Streaming', 'Event Calendar', 'Chatbot Search', 'Donation Portal'],
+                    datasets: [{
+                        label: 'Impact on Daily Active Users (DAU)',
+                        data: [85, 65, 40, 70, 20],
+                        backgroundColor: 'rgba(217, 119, 6, 0.8)', // Amber 600
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Impact on Session Duration',
+                        data: [15, 95, 30, 50, 10],
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)', // Blue 500
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Relative Impact Score (0-100)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                            titleColor: '#2d3748',
+                            bodyColor: '#4a5568',
+                            borderColor: '#e2e8f0',
+                            borderWidth: 1
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- 5. Event Listeners Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Setup Main Navigation
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    switchTab(e.target.dataset.target);
+                });
+            });
+
+            // Setup Feature Sidebar Navigation
+            document.querySelectorAll('.feature-category-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    switchFeatureCategory(e.target, e.target.dataset.category);
+                });
+            });
+
+            // Initialize default states
+            renderFeatureDetails('content');
+            
+            // Add a simple fade-in CSS class for transitions
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .animate-fade-in {
+                    animation: fadeIn 0.4s ease-in-out;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+    </script>
 </body>
 </html>
